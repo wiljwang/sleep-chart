@@ -10,7 +10,7 @@ export const AllRecordedData = () => {
     <>
       <h3>All Recorded Data</h3>
       <ul className="list">
-        {data.reverse().map((datum) => (
+        {data.map((datum) => (
           <Datum key={datum.id} datum={datum} />
         ))}
       </ul>

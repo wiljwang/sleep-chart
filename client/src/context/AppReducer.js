@@ -8,7 +8,7 @@ export default (state, action) => {
     case "ADD_DATUM":
       return {
         ...state,
-        data: [...state.data, action.payload],
+        data: [action.payload, ...state.data],
       };
     default:
       return state;

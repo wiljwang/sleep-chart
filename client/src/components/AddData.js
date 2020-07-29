@@ -12,14 +12,15 @@ export const AddData = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    if (starts < ends) {
+      const newDatum = {
+        id: uuidv4(),
+        starts,
+        ends,
+      };
 
-    const newDatum = {
-      id: uuidv4(),
-      starts,
-      ends,
-    };
-
-    addDatum(newDatum);
+      addDatum(newDatum);
+    }
   };
 
   return (
