@@ -21,7 +21,7 @@ body {
 
 .container {
   margin: 30px auto;
-  width: 350px;
+  width: 400px;
 }
 
 h1 {
@@ -122,10 +122,4 @@ input[type="datetime-local"] {
 
 .list li:hover .delete-btn {
   opacity: 1;
-}
-
-@media (max-width: 320px) {
-  .container {
-    width: 300px;
-  }
 }
