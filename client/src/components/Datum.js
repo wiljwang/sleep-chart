@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import toHrMin from "../toHrMin";
+import toHrMin from "../utils/toHrMin";
 
 import { GlobalContext } from "../context/GlobalState";
 
@@ -16,13 +16,11 @@ export const Datum = ({ datum }) => {
     minute: "numeric",
   });
 
-  const parts = dateTimeFormat.formatRange(startDate, endDate);
-
   return (
     <li>
-      {parts}
+      {dateTimeFormat.formatRange(startDate, endDate)}
       <span>{toHrMin(endDate - startDate)}</span>
-      <button onClick={() => deleteDatum(datum.id)} className="delete-btn">
+      <button onClick={() => deleteDatum(datum._id)} className="delete-btn">
         x
       </button>
     </li>

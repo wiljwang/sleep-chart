@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import toDay from "../toDay";
+import toDay from "../utils/toDay";
 import Chart from "react-apexcharts";
 
 import { GlobalContext } from "../context/GlobalState";

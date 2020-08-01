@@ -2,8 +2,6 @@ import React, { useContext, useState } from "react";
 
 import { GlobalContext } from "../context/GlobalState";
 
-import { v4 as uuidv4 } from "uuid";
-
 export const AddData = () => {
   const [starts, setStarts] = useState(0);
   const [ends, setEnds] = useState(0);
@@ -14,11 +12,9 @@ export const AddData = () => {
     e.preventDefault();
     if (starts < ends) {
       const newDatum = {
-        id: uuidv4(),
         starts,
         ends,
       };
-
       addDatum(newDatum);
     }
   };

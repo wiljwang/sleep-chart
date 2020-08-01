@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import toHrMin from "../toHrMin";
+import toHrMin from "../utils/toHrMin";
 
 import { GlobalContext } from "../context/GlobalState";
 
