@@ -15,15 +15,12 @@ export const SleepAnalysis = () => {
     endDate.setMonth(0);
     startDate.setDate(1);
     endDate.setDate(1);
-    console.log(startDate.valueOf());
-    console.log(endDate.valueOf());
     return {
       x: day,
       y: [startDate.getTime(), endDate.getTime()],
     };
   });
   week.reverse();
-  console.log(week);
 
   return (
     <>

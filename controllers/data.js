@@ -54,7 +54,7 @@ exports.addDatum = async (req, res, next) => {
 // @access  public
 exports.deleteDatum = async (req, res, next) => {
   try {
-    const datum = await Transaction.findById(req.params.id);
+    const datum = await Datum.findById(req.params.id);
     if (!datum) {
       return res.status(404).json({
         success: false,
