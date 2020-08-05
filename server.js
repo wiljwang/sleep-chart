@@ -9,8 +9,6 @@ dotenv.config({ path: "./config/config.env" });
 
 connectDB();
 
-const data = require("./routes/data");
-
 const app = express();
 
 app.use(express.json());
@@ -19,7 +17,9 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-app.use("/api/v1/data", data);
+app.use("/api/v1/data", require("./routes/api/data"));
+app.use("/api/v1/users", require("./routes/api/users"));
+app.use("/api/v1/auth", require("./routes/api/auth"));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));

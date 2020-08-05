@@ -6,7 +6,7 @@ export const AddData = () => {
   const [starts, setStarts] = useState(0);
   const [ends, setEnds] = useState(0);
 
-  const { addDatum } = useContext(GlobalContext);
+  const { addDatum, isAuthenticated } = useContext(GlobalContext);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -39,7 +39,11 @@ export const AddData = () => {
             onChange={(e) => setEnds(e.target.value)}
           />
         </div>
-        <button className="btn">Add</button>
+        {isAuthenticated ? (
+          <button className="btn">Add</button>
+        ) : (
+          <h4 className="mb-3 ml-4">please log in to manage items</h4>
+        )}
       </form>
     </>
   );

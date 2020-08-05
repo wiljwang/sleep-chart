@@ -24,7 +24,7 @@ exports.getData = async (req, res, next) => {
 
 // @desc    add datum
 // @route   POST /api/v1/data
-// @access  public
+// @access  private
 exports.addDatum = async (req, res, next) => {
   try {
     const { starts, ends } = req.body;
@@ -51,7 +51,7 @@ exports.addDatum = async (req, res, next) => {
 
 // @desc    delete datum
 // @route   DELETE /api/v1/data/:id
-// @access  public
+// @access  private
 exports.deleteDatum = async (req, res, next) => {
   try {
     const datum = await Datum.findById(req.params.id);

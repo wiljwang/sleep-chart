@@ -4,9 +4,19 @@ import axios from "axios";
 
 // initial state
 const initialState = {
+  // app
   data: [],
   error: null,
   loading: true,
+  // auth
+  token: localStorage.getItem("token"),
+  isAuthenticated: null,
+  isLoading: false,
+  user: null,
+  // error
+  message: {},
+  status: null,
+  id: null,
 };
 
 // create context
@@ -67,6 +77,88 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
+  // check token and load user
+  const loadUser = () => {
+    // user loading
+    dispatch({ type: "USER_LOADING" });
+
+    axios
+      .get("/api/v1/auth/user", tokenConfig(state))
+      .then((res) => dispatch({ type: "USER_LOADED", payload: res.data }))
+      .catch((error) => {
+        dispatch(returnErrors(error.response.data, error.response.status));
+        dispatch({ type: "AUTH_ERROR" });
+      });
+  };
+
+  // return errors
+  const returnErrors = (message, status, id = null) => {
+    return {
+      type: "GET_ERRORS",
+      payload: { message, status, id },
+    };
+  };
+
+  // clear errors
+  const clearErrors = () => {
+    return {
+      type: "CLEAR_ERRORS",
+    };
+  };
+
+  // register user
+  const register = ({ name, email, password }) => {
+    // headers
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    // request body
+    const body = JSON.stringify({ name, email, password });
+
+    axios
+      .post("/api/users", body, config)
+      .then((res) => dispatch({ type: "REGISTER_SUCCESS", payload: res.data }))
+      .catch((err) => {
+        dispatch(
+          returnErrors(err.response.data, err.response.status, "REGISTER_FAIL")
+        );
+        dispatch({ type: "REGISTER_FAIL" });
+      });
+  };
+
+  // log in user
+  const login = ({ email, password }) => {
+    // headers
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    // request body
+    const body = JSON.stringify({ email, password });
+
+    axios
+      .post("/api/auth", body, config)
+      .then((res) => dispatch({ type: "LOGIN_SUCCESS", payload: res.data }))
+      .catch((err) => {
+        dispatch(
+          returnErrors(err.response.data, err.response.status, "LOGIN_FAIL")
+        );
+        dispatch({ type: "LOGIN_FAIL" });
+      });
+  };
+
+  // log out user
+  const logout = () => {
+    return {
+      type: "LOGOUT_SUCCESS",
+    };
+  };
+
   return (
     <GlobalContext.Provider
       value={{
@@ -76,9 +168,34 @@ export const GlobalProvider = ({ children }) => {
         getData,
         deleteDatum,
         addDatum,
+        loadUser,
+        clearErrors,
+        register,
+        login,
+        logout,
       }}
     >
       {children}
     </GlobalContext.Provider>
   );
+};
+
+// set up config/headers and token
+export const tokenConfig = (state) => {
+  // get token from localstorage
+  const token = state.token;
+
+  // headers
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+    },
+  };
+
+  // if token, then add to headers
+  if (token) {
+    config.headers["x-auth-token"] = token;
+  }
+
+  return config;
 };

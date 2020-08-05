@@ -4,7 +4,7 @@ import toHrMin from "../utils/toHrMin";
 import { GlobalContext } from "../context/GlobalState";
 
 export const Datum = ({ datum }) => {
-  const { deleteDatum } = useContext(GlobalContext);
+  const { deleteDatum, isAuthenticated } = useContext(GlobalContext);
 
   const startDate = Date.parse(datum.starts);
   const endDate = Date.parse(datum.ends);
@@ -20,9 +20,11 @@ export const Datum = ({ datum }) => {
     <li>
       {dateTimeFormat.formatRange(startDate, endDate)}
       <span>{toHrMin(endDate - startDate)}</span>
-      <button onClick={() => deleteDatum(datum._id)} className="delete-btn">
-        x
-      </button>
+      {isAuthenticated ? (
+        <button onClick={() => deleteDatum(datum._id)} className="delete-btn">
+          x
+        </button>
+      ) : null}
     </li>
   );
 };
